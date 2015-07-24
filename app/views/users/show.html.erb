@@ -1,0 +1,43 @@
+<!-- Hi <%=session[:name]%>  -->
+Hi <%=@user.name%>
+
+<form action="/users/<%=session[:user_id]%>/edit" method="post">
+	
+	<input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+	<input type="submit" value="Edit">
+</form>
+
+
+
+<form action = "/secrets/create" method = "post">
+	<input type = "hidden" name = "authenticity_token" value = "<%= form_authenticity_token%>">
+	<input type = "hidden" name = "user_id" value="<%=session[:user_id]%>">	
+	<textarea type = "text" name = "content"></textarea>
+	<input type = "submit" value = "Create Secret">
+</form>
+Secrets
+<% @secrets.each do |secret|%>
+
+<ul>
+	<li><%= secret.content%></li>
+	<li><%if secret.user_id ==session[:user_id]%>
+
+	<form action="/secrets/<%=secret.id%>" method="post">
+	<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token%>">
+	<input type="hidden" name="_method" value="delete">
+	<input type = "submit" value ="Delete Secret">	
+	</form>
+
+
+
+	</li>
+</ul>
+
+
+<%end%>
+<%end%>
+
+
+
+
+
